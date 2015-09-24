@@ -1,0 +1,25 @@
+{
+  "name": "fo-popover",
+  "version": "1.0.4",
+  "homepage": "https://github.com/forsigner/fo-popover",
+  "description": "A nice popover.",
+  "main": "dist/dist/fo-popover.js",
+  "keywords": [
+    "popover",
+    "tether"
+  ],
+  "authors": [
+    "forsigner"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "tether": "*"
+  }
+}

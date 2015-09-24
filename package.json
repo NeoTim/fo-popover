@@ -1,0 +1,29 @@
+{
+  "name": "fo-popover",
+  "version": "1.0.5",
+  "description": "A nice popover for Angular",
+  "main": "fo-popover.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forsigner/fo-popover.git"
+  },
+  "keywords": [
+    "angular",
+    "active",
+    "link"
+  ],
+  "author": "forsigner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/forsigner/fo-popover/issues"
+  },
+  "homepage": "https://github.com/forsigner/fo-popover#readme",
+  "devDependencies": {
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-rename": "^1.2.2"
+  }
+}
