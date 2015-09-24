@@ -2,10 +2,23 @@
   position: absolute;
   display: none;
   border-radius: 4px;
-  padding: 15px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
   background: #fff;
+  z-index: 2000;
 }
 .fo-popover.open {
   display: inline-block;
+}
+.fo-popover .popover-header {
+  border-bottom: 1px solid #f4f4f4;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px 0;
+}
+.fo-popover .popover-footer {
+  border-top: 1px solid #f4f4f4;
+  text-align: center;
+  padding: 10px 0;
 }

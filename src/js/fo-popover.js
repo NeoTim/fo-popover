@@ -16,6 +16,7 @@
         var $wrapper = angular.element('<div class="fo-popover"></div>');
         $wrapper[0].id = attr.popoverId;
         $wrapper.addClass(attr.popoverClass);
+        $wrapper.css('width', attr.popoverWidth);
 
         var $popover = angular.element($wrapper).append(templateString);
 
@@ -127,6 +128,8 @@
         };
 
         element.bind('click', function(e) {
+          angular.element('.fo-popover').removeClass('open');
+
           if (popover.isOpened()) {
             popover.close();
           } else {
@@ -156,7 +159,20 @@
 
       }
     };
-  }]);
+  }])
+
+
+
+  .factory('foPopover', [function() {
+
+    return {
+      close: function(id) {
+        angular.element('.fo-popover').removeClass('open');
+      }
+    };
+
+  }])
+
 
 
 })(window, window.angular);
