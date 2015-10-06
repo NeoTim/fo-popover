@@ -128,7 +128,7 @@
         };
 
         element.bind('click', function(e) {
-          angular.element('.fo-popover').removeClass('open');
+          angular.element(document.querySelector('.fo-popover')).removeClass('open');
 
           if (popover.isOpened()) {
             popover.close();
@@ -167,7 +167,7 @@
 
     return {
       close: function(id) {
-        angular.element('.fo-popover').removeClass('open');
+        angular.element(document.querySelector('.fo-popover')).removeClass('open');
       }
     };
 
