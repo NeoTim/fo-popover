@@ -17,6 +17,9 @@
   text-align: center;
   padding: 10px 0;
 }
+.fo-popover .popover-body {
+  padding: 10px;
+}
 .fo-popover .popover-footer {
   border-top: 1px solid #f4f4f4;
   text-align: center;
