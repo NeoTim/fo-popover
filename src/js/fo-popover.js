@@ -118,7 +118,9 @@
 
             tetherOption = angular.extend(tetherOption, popover.positions[positionConfig]);
 
+            angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
             $popover.addClass('open');
+
             new Tether(tetherOption);
           },
 
