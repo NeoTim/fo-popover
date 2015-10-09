@@ -169,7 +169,7 @@
 
     return {
       close: function(id) {
-        angular.element(document.querySelector('.fo-popover')).removeClass('open');
+        angular.element(document.querySelector('.fo-popover.open')).removeClass('open');
       }
     };
 
