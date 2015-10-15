@@ -20,7 +20,8 @@
 
         var $popover = angular.element($wrapper).append(templateString);
 
-        element.after($popover);
+        var $body = $document.find('body');
+        $body.append($popover);
 
         var positionConfig = attr.popoverPosition.split(' ').join('_');
 
