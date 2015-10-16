@@ -3,7 +3,7 @@
 
 var popover = require('./lib/popover');
 
-module.exports = angular.module('foPopover.directive', []).directive('foPopover', foPopover);
+module.exports = angular.module('foPopover.directive', []).directive('foPopover', foPopover).directive('foPopoverInner', foPopoverInner);
 
 foPopover.$inject = ['$templateCache', '$document', '$compile'];
 
@@ -55,15 +55,107 @@ function foPopover($templateCache, $document, $compile) {
   };
 }
 
+foPopoverInner.$inject = ['$templateCache', '$document', '$compile'];
+
+function foPopoverInner($templateCache, $document, $compile) {
+
+  function appendToBody(popoverElement) {
+    $document.find('body').append(popoverElement);
+  }
+
+  function compileToScope(popoverElement, scope) {
+    $compile(popoverElement)(scope);
+  }
+
+  function closeAllPopover() {
+    angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
+  }
+
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function link(scope, element, attr) {
+      console.log(attr);
+      var $tagLink = angular.element(document).find('a');
+      var p = new popover($templateCache, element, attr);
+
+      appendToBody(p.element);
+      compileToScope(p.element, scope);
+
+      scope.closePopover = p.close;
+
+      element.bind('click', function (e) {
+        e.stopPropagation();
+      });
+
+      angular.element(document.querySelector('.' + attr.foPopoverId)).bind('click', function (e) {
+        e.stopPropagation();
+      });
+
+      $tagLink.bind('click', function (e) {
+        if (p.element.hasClass('open')) e.preventDefault();
+      });
+
+      $document.bind('click', function () {
+        angular.element(document.querySelector('.' + attr.foPopoverId)).remove();
+      });
+    }
+  };
+}
+
 },{"./lib/popover":3}],2:[function(require,module,exports){
 'use strict';
 
 module.exports = angular.module('foPopover.services', []).factory('foPopover', foPopover);
 
-function foPopover() {
+foPopover.$inject = ['$rootScope', '$document', '$templateCache', '$compile'];
+
+function foPopover($rootScope, $document, $templateCache, $compile) {
+
+  function createPopoverELement(options) {
+    var templateString = $templateCache.get(options.template);
+    var $wrapper = angular.element('<div fo-popover-inner fo-popover-id=fo-popover-' + Date.now() + ' class="fo-popover"></div>');
+    $wrapper[0].id = options.id;
+    $wrapper.addClass(options['class']);
+    $wrapper.addClass('fo-popover-' + Date.now());
+
+    return angular.element($wrapper).append(templateString);
+  }
+
   return {
     close: function close(id) {
       angular.element(document.querySelector('.fo-popover.open')).removeClass('open');
+    },
+    open: function open(options) {
+      event.stopPropagation();
+      console.log(options);
+      var $popover = createPopoverELement(options);
+      var element = angular.element($popover);
+      var $body = angular.element($document).find('body');
+
+      $body.append($popover);
+
+      $compile($popover)($rootScope);
+
+      var tetherOption = {
+        element: element[0],
+        target: options.target,
+        attachment: 'bottom middle',
+        targetAttachment: 'top middle',
+        offset: options.offset
+      };
+
+      if (!element.hasClass('open')) {
+        element.addClass('open');
+      }
+
+      // let currentPosition = getCurrentPosition();
+      // tetherOption = angular.extend(tetherOption, positions[currentPosition]);
+      //
+      // angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
+      // this.element.addClass('open');
+
+      new Tether(tetherOption);
     }
   };
 }

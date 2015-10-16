@@ -2,7 +2,8 @@ let popover = require('./lib/popover');
 
 module.exports = angular
   .module('foPopover.directive', [])
-  .directive('foPopover', foPopover);
+  .directive('foPopover', foPopover)
+  .directive('foPopoverInner', foPopoverInner);
 
 foPopover.$inject = ['$templateCache', '$document', '$compile'];
 
@@ -49,6 +50,56 @@ function foPopover($templateCache, $document, $compile) {
 
       $document.bind('click', function() {
         p.close();
+      });
+
+    }
+  };
+}
+
+
+foPopoverInner.$inject = ['$templateCache', '$document', '$compile'];
+
+function foPopoverInner($templateCache, $document, $compile) {
+
+  function appendToBody(popoverElement) {
+    $document.find('body').append(popoverElement);
+  }
+
+  function compileToScope(popoverElement, scope) {
+    $compile(popoverElement)(scope);
+  }
+
+  function closeAllPopover() {
+    angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
+  }
+
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function(scope, element, attr) {
+      console.log(attr);
+      let $tagLink = angular.element(document).find('a');
+      let p = new popover($templateCache, element, attr);
+
+      appendToBody(p.element);
+      compileToScope(p.element, scope);
+
+      scope.closePopover = p.close;
+
+      element.bind('click', function(e) {
+        e.stopPropagation();
+      });
+
+      angular.element(document.querySelector('.' + attr.foPopoverId)).bind('click', function(e) {
+        e.stopPropagation();
+      });
+
+      $tagLink.bind('click', function(e) {
+        if (p.element.hasClass('open')) e.preventDefault();
+      });
+
+      $document.bind('click', function() {
+        angular.element(document.querySelector('.' + attr.foPopoverId)).remove();
       });
 
     }
