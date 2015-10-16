@@ -1,7 +1,6 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
-module.exports = angular.module('foPopover.directive', []).directive('foPopover', foPopover);
+module.exports = angular
+  .module('foPopover.directive', [])
+  .directive('foPopover', foPopover);
 
 foPopover.$inject = ['$rootScope', '$location', '$templateCache', '$document', '$compile'];
 
@@ -10,23 +9,23 @@ function foPopover($rootScope, $location, $templateCache, $document, $compile) {
 
     restrict: 'A',
     scope: true,
-    link: function link(scope, element, attr) {
+    link: function(scope, element, attr) {
 
-      var templateString = $templateCache.get(attr.popoverTemplate);
+      let templateString = $templateCache.get(attr.popoverTemplate);
 
-      var $wrapper = angular.element('<div class="fo-popover"></div>');
+      let $wrapper = angular.element('<div class="fo-popover"></div>');
       $wrapper[0].id = attr.popoverId;
       $wrapper.addClass(attr.popoverClass);
       $wrapper.css('width', attr.popoverWidth);
 
-      var $popover = angular.element($wrapper).append(templateString);
+      let $popover = angular.element($wrapper).append(templateString);
 
-      var $body = $document.find('body');
+      let $body = $document.find('body');
       $body.append($popover);
 
-      var positionConfig = attr.popoverPosition.split(' ').join('_');
+      let positionConfig = attr.popoverPosition.split(' ').join('_');
 
-      var popover = {
+      let popover = {
 
         positions: {
           // top
@@ -105,12 +104,12 @@ function foPopover($rootScope, $location, $templateCache, $document, $compile) {
 
         },
 
-        isOpened: function isOpened() {
+        isOpened: function() {
           return $popover.hasClass('open');
         },
 
-        open: function open() {
-          var tetherOption = {
+        open: function() {
+          let tetherOption = {
             element: $popover[0],
             target: element[0],
             attachment: 'bottom middle',
@@ -126,12 +125,12 @@ function foPopover($rootScope, $location, $templateCache, $document, $compile) {
           new Tether(tetherOption);
         },
 
-        close: function close() {
+        close: function() {
           $popover.removeClass('open');
         }
       };
 
-      element.bind('click', function (e) {
+      element.bind('click', function(e) {
         angular.element(document.querySelector('.fo-popover')).removeClass('open');
 
         if (popover.isOpened()) {
@@ -146,42 +145,21 @@ function foPopover($rootScope, $location, $templateCache, $document, $compile) {
 
       scope.closePopover = popover.close;
 
-      $popover.bind('click', function (e) {
+      $popover.bind('click', function(e) {
         e.stopPropagation();
       });
 
-      angular.element(document).find('a').bind('click', function (e) {
+      angular.element(document).find('a').bind('click', function(e) {
         if ($popover.hasClass('open')) {
           e.preventDefault();
         }
       });
 
-      $document.bind('click', function () {
+      $document.bind('click', function() {
         popover.close();
       });
+
+
     }
   };
 }
-
-},{}],2:[function(require,module,exports){
-'use strict';
-
-module.exports = angular.module('foPopover.services', []).factory('foPopover', foPopover);
-
-function foPopover() {
-  return {
-    close: function close(id) {
-      angular.element(document.querySelector('.fo-popover.open')).removeClass('open');
-    }
-  };
-}
-
-},{}],3:[function(require,module,exports){
-'use strict';
-
-var directives = require('./fo-popover.directives');
-var services = require('./fo-popover.services');
-
-module.exports = angular.module('foPopover', [directives.name, services.name]);
-
-},{"./fo-popover.directives":1,"./fo-popover.services":2}]},{},[3]);
