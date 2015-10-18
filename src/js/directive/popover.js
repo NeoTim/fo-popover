@@ -19,7 +19,9 @@ module.exports = function($templateCache, element, attr) {
   function placePopover(popoverElement) {
     let tetherOption = {
       element: popoverElement[0],
-      target: element[0]
+      target: element[0],
+      attachment: 'bottom middle',
+      targetAttachment: 'top middle'
     };
     let currentPosition = getCurrentPosition();
     tetherOption = angular.extend(tetherOption, currentPosition);

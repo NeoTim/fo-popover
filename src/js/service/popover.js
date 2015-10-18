@@ -42,7 +42,9 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
   function placePopover(popoverElement, options) {
     let tetherOption = {
       element: popoverElement,
-      target: options.target
+      target: options.target,
+      attachment: 'bottom middle',
+      targetAttachment: 'top middle'
     };
 
     let currentPosition = getCurrentPosition(options);

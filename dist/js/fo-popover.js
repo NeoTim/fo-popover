@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var popover = require('./popover');
+var Popover = require('./popover');
 
 module.exports = angular.module('foPopover.directive', []).directive('foPopover', foPopover);
 
@@ -26,30 +26,30 @@ function foPopover($templateCache, $document, $compile) {
     scope: true,
     link: function link(scope, element, attr) {
       var $tagLink = angular.element(document).find('a');
-      var p = new popover($templateCache, element, attr);
+      var popover = new Popover($templateCache, element, attr);
 
-      appendToBody(p.element);
-      compileToScope(p.element, scope);
+      appendToBody(popover.element);
+      compileToScope(popover.element, scope);
 
-      scope.closePopover = p.close;
+      scope.closePopover = popover.close;
 
       element.bind('click', function (e) {
         closeAllPopover();
         e.stopPropagation();
-        if (p.isOpened()) return p.close();
-        p.open();
+        if (popover.isOpened()) return popover.close();
+        popover.open();
       });
 
-      p.element.bind('click', function (e) {
+      popover.element.bind('click', function (e) {
         e.stopPropagation();
       });
 
       $tagLink.bind('click', function (e) {
-        if (p.element.hasClass('open')) e.preventDefault();
+        if (popover.element.hasClass('open')) e.preventDefault();
       });
 
       $document.bind('click', function () {
-        p.close();
+        popover.close();
       });
     }
   };
@@ -79,7 +79,9 @@ module.exports = function ($templateCache, element, attr) {
   function placePopover(popoverElement) {
     var tetherOption = {
       element: popoverElement[0],
-      target: element[0]
+      target: element[0],
+      attachment: 'bottom middle',
+      targetAttachment: 'top middle'
     };
     var currentPosition = getCurrentPosition();
     tetherOption = angular.extend(tetherOption, currentPosition);
@@ -346,7 +348,9 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
   function placePopover(popoverElement, options) {
     var tetherOption = {
       element: popoverElement,
-      target: options.target
+      target: options.target,
+      attachment: 'bottom middle',
+      targetAttachment: 'top middle'
     };
 
     var currentPosition = getCurrentPosition(options);

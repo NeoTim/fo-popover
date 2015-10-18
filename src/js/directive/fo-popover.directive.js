@@ -1,4 +1,4 @@
-let popover = require('./popover');
+let Popover = require('./popover');
 
 module.exports = angular
   .module('foPopover.directive', [])
@@ -25,30 +25,30 @@ function foPopover($templateCache, $document, $compile) {
     scope: true,
     link: function(scope, element, attr) {
       let $tagLink = angular.element(document).find('a');
-      let p = new popover($templateCache, element, attr);
+      let popover = new Popover($templateCache, element, attr);
 
-      appendToBody(p.element);
-      compileToScope(p.element, scope);
+      appendToBody(popover.element);
+      compileToScope(popover.element, scope);
 
-      scope.closePopover = p.close;
+      scope.closePopover = popover.close;
 
       element.bind('click', function(e) {
         closeAllPopover();
         e.stopPropagation();
-        if (p.isOpened()) return p.close();
-        p.open();
+        if (popover.isOpened()) return popover.close();
+        popover.open();
       });
 
-      p.element.bind('click', function(e) {
+      popover.element.bind('click', function(e) {
         e.stopPropagation();
       });
 
       $tagLink.bind('click', function(e) {
-        if (p.element.hasClass('open')) e.preventDefault();
+        if (popover.element.hasClass('open')) e.preventDefault();
       });
 
       $document.bind('click', function() {
-        p.close();
+        popover.close();
       });
 
     }
