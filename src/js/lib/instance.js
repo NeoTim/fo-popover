@@ -48,7 +48,7 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
 
     if (!isCreated()) {
       appendToBody($popover)
-      compileToScope($popover, $rootScope);
+      compileToScope($popover, options.scope || $rootScope);
 
       let tetherOption = {
         element: $popover[0],
