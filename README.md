@@ -29,9 +29,6 @@ angular.module('app', ['foPopover']);
 <button
   class="btn btn-success"
   fo-popover
-  popover-class="popover"
-  popover-id="popover"
-  popover-offset="20px 0"
   popover-position="top middle"
   popover-template="popover.html"
 >删除</button>
@@ -40,8 +37,7 @@ angular.module('app', ['foPopover']);
   <div class="popover-header">
     email
   </div>
-  <div class="popover-body"></div>
-  <div class="box-body">
+  <div class="popover-body">
     <label class="control-label" for="ips">email</label>
     <input class="form-control" id="ips" ng-model="email" placeholder="email" type="email">
   </div>

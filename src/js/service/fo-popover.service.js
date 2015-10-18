@@ -1,5 +1,4 @@
-let positions = require('./lib/positions');
-let instance = require('./lib/instance');
+let popover = require('./popover');
 let foPopoverInnerDirective = require('./fo-popover-inner.directive');
 
 module.exports = angular
@@ -13,7 +12,7 @@ foPopover.$inject = ['$rootScope', '$document', '$templateCache', '$compile'];
 function foPopover($rootScope, $document, $templateCache, $compile) {
   var $popover;
 
-  var instances = {};
+  var popovers = {};
 
   function isOpened($popover) {
     return $popover.hasClass('open');
@@ -21,7 +20,7 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
 
   function isNewInstance(options) {
     var result = false;
-    for (var i in instances) {
+    for (var i in popovers) {
       if (i === options.template) {
         result = true;
         break;
@@ -38,10 +37,10 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
       event.stopPropagation();
 
       if (!isNewInstance(options)) {
-        instances[options.template] = new instance($document, $templateCache, $compile, $rootScope, options);
+        popovers[options.template] = new popover($document, $templateCache, $compile, $rootScope, options);
       }
 
-      instances[options.template].open();
+      popovers[options.template].open();
     }
   };
 }

@@ -1,4 +1,4 @@
-let positions = require('./positions');
+let positions = require('../lib/positions');
 
 module.exports = function($document, $templateCache, $compile, $rootScope, options) {
   var guid = 'fo-popover-' + Date.now();

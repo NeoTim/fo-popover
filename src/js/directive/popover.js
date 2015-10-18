@@ -1,4 +1,4 @@
-let positions = require('./positions');
+let positions = require('../lib/positions');
 
 module.exports = function($templateCache, element, attr) {
 

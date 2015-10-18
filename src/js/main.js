@@ -1,5 +1,5 @@
-let foPopoverDirective = require('./fo-popover.directive');
-let foPopoverService = require('./fo-popover.service');
+let foPopoverDirective = require('./directive/fo-popover.directive');
+let foPopoverService = require('./service/fo-popover.service');
 
 module.exports = angular
   .module('foPopover', [

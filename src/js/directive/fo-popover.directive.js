@@ -1,4 +1,4 @@
-let popover = require('./lib/popover');
+let popover = require('./popover');
 
 module.exports = angular
   .module('foPopover.directive', [])
