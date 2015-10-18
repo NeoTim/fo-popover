@@ -31,10 +31,6 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
     $compile(popoverElement)(scope);
   }
 
-  function getCurrentPosition(options) {
-    return options.position.split(' ').join('_');
-  }
-
   function closeAllPopover() {
     angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
   }
@@ -43,32 +39,38 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
     return document.querySelector('.' + guid) ? true : false;
   }
 
+  function placePopover(popoverElement, options) {
+    let tetherOption = {
+      element: popoverElement,
+      target: options.target
+    };
+
+    let currentPosition = getCurrentPosition(options);
+    tetherOption = angular.extend(tetherOption, currentPosition);
+    new Tether(tetherOption);
+  }
+
+  function getCurrentPosition(options) {
+    var position = options.position.split(' ').join('_');
+    if (options.offset) {
+      return angular.extend(positions[position], {offset: options.offset});
+    };
+    return positions[position];
+  }
+
   this.open = function() {
     $popover = getPopoverElement(options);
+    closeAllPopover();
 
     if (!isCreated()) {
       appendToBody($popover)
       compileToScope($popover, options.scope || $rootScope);
-
-      let tetherOption = {
-        element: $popover[0],
-        target: options.target,
-        attachment: 'bottom middle',
-        targetAttachment: 'top middle',
-        offset: options.offset
-      };
-
-      let currentPosition = getCurrentPosition(options);
-      tetherOption = angular.extend(tetherOption, positions[currentPosition]);
-
-      closeAllPopover();
       $popover.addClass('open');
-      new Tether(tetherOption);
+      placePopover($popover[0], options);
     } else {
-      closeAllPopover();
       $popover.addClass('open');
     }
-
   };
+
 
 };

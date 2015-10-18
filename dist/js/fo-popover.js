@@ -176,10 +176,6 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
     $compile(popoverElement)(scope);
   }
 
-  function getCurrentPosition(options) {
-    return options.position.split(' ').join('_');
-  }
-
   function closeAllPopover() {
     angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
   }
@@ -188,29 +184,35 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
     return document.querySelector('.' + guid) ? true : false;
   }
 
+  function placePopover(popoverElement, options) {
+    var tetherOption = {
+      element: popoverElement,
+      target: options.target
+    };
+
+    var currentPosition = getCurrentPosition(options);
+    tetherOption = angular.extend(tetherOption, currentPosition);
+    new Tether(tetherOption);
+  }
+
+  function getCurrentPosition(options) {
+    var position = options.position.split(' ').join('_');
+    if (options.offset) {
+      return angular.extend(positions[position], { offset: options.offset });
+    };
+    return positions[position];
+  }
+
   this.open = function () {
     $popover = getPopoverElement(options);
+    closeAllPopover();
 
     if (!isCreated()) {
       appendToBody($popover);
       compileToScope($popover, options.scope || $rootScope);
-
-      var tetherOption = {
-        element: $popover[0],
-        target: options.target,
-        attachment: 'bottom middle',
-        targetAttachment: 'top middle',
-        offset: options.offset
-      };
-
-      var currentPosition = getCurrentPosition(options);
-      tetherOption = angular.extend(tetherOption, positions[currentPosition]);
-
-      closeAllPopover();
       $popover.addClass('open');
-      new Tether(tetherOption);
+      placePopover($popover[0], options);
     } else {
-      closeAllPopover();
       $popover.addClass('open');
     }
   };
@@ -233,8 +235,26 @@ module.exports = function ($templateCache, element, attr) {
     return angular.element($wrapper).append(templateString);
   }
 
+  function closeAllPopover() {
+    angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
+  }
+
+  function placePopover(popoverElement) {
+    var tetherOption = {
+      element: popoverElement[0],
+      target: element[0]
+    };
+    var currentPosition = getCurrentPosition();
+    tetherOption = angular.extend(tetherOption, currentPosition);
+    new Tether(tetherOption);
+  }
+
   function getCurrentPosition() {
-    return attr.popoverPosition.split(' ').join('_');
+    var position = attr.popoverPosition.split(' ').join('_');
+    if (attr.popoverOffset) {
+      return angular.extend(positions[position], { offset: attr.popoverOffset });
+    };
+    return positions[position];
   }
 
   this.element = createPopoverELement();
@@ -244,21 +264,9 @@ module.exports = function ($templateCache, element, attr) {
   }).bind(this);
 
   this.open = (function () {
-    var tetherOption = {
-      element: this.element[0],
-      target: element[0],
-      attachment: 'bottom middle',
-      targetAttachment: 'top middle',
-      offset: attr.popoverOffset
-    };
-
-    var currentPosition = getCurrentPosition();
-    tetherOption = angular.extend(tetherOption, positions[currentPosition]);
-
-    angular.element(document.querySelectorAll('.fo-popover')).removeClass('open');
+    closeAllPopover();
     this.element.addClass('open');
-
-    new Tether(tetherOption);
+    placePopover(this.element);
   }).bind(this);
 
   this.close = (function () {
@@ -272,74 +280,90 @@ module.exports = function ($templateCache, element, attr) {
 module.exports = {
   // top
   top_middle: {
+    offset: '10px 0',
     attachment: 'bottom middle',
     targetAttachment: 'top middle'
   },
   top_left: {
+    offset: '10px 0',
     attachment: 'bottom left',
     targetAttachment: 'top left'
   },
   top_right: {
+    offset: '10px 0',
     attachment: 'bottom right',
     targetAttachment: 'top right'
   },
 
   // bottom
   bottom_middle: {
+    offset: '-10px 0',
     attachment: 'top middle',
     targetAttachment: 'bottom middle'
   },
   bottom_left: {
+    offset: '-10px 0',
     attachment: 'top left',
     targetAttachment: 'bottom left'
   },
   bottom_right: {
+    offset: '-10px 0',
     attachment: 'top right',
     targetAttachment: 'bottom right'
   },
 
   // left
   left_middle: {
+    offset: '0 10px',
     attachment: 'middle right',
     targetAttachment: 'middle left'
   },
   left_top: {
+    offset: '0 10px',
     attachment: 'top right',
     targetAttachment: 'top left'
   },
   left_bottom: {
+    offset: '0 10px',
     attachment: 'bottom right',
     targetAttachment: 'bottom left'
   },
 
   // right
   right_middle: {
+    offset: '0 -10px',
     attachment: 'middle left',
     targetAttachment: 'middle right'
   },
   right_top: {
+    offset: '0 -10px',
     attachment: 'top left',
     targetAttachment: 'top right'
   },
   right_bottom: {
+    offset: '0 -10px',
     attachment: 'bottom left',
     targetAttachment: 'bottom right'
   },
 
   //diagonal
   top_left_diagonal: {
+    offset: '0 -10px',
     attachment: 'bottom right',
     targetAttachment: 'top left'
   },
   top_right_diagonal: {
+    offset: '0 -10px',
     attachment: 'bottom left',
     targetAttachment: 'top right'
   },
   bottom_left_diagonal: {
+    offset: '0 -10px',
     attachment: 'top right',
     targetAttachment: 'bottom left'
   },
   bottom_right_diagonal: {
+    offset: '0 -10px',
     attachment: 'top left',
     targetAttachment: 'bottom right'
   }
