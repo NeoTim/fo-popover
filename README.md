@@ -42,7 +42,7 @@ angular.module('app', ['foPopover']);
   </div>
   <div class="popover-body">
     <label class="control-label" for="email">email</label>
-    <input class="form-control" id="email" ng-model="email" placeholder="email" type="email">
+    <input class="form-control" id="email" ng-model="email" type="email">
   </div>
   <div class="popover-footer">
     <button class="btn btn-primary" ng-click="yes()">确认</button>
