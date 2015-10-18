@@ -21,6 +21,9 @@ bower install fo-popover --save
 <script src="bower_components/fo-popover/dist/js/fo-popover.js"></script>
 ```
 
+
+#### As a directive
+
 ```js
 angular.module('app', ['foPopover']);
 ```
@@ -38,12 +41,50 @@ angular.module('app', ['foPopover']);
     email
   </div>
   <div class="popover-body">
-    <label class="control-label" for="ips">email</label>
-    <input class="form-control" id="ips" ng-model="email" placeholder="email" type="email">
+    <label class="control-label" for="email">email</label>
+    <input class="form-control" id="email" ng-model="email" placeholder="email" type="email">
   </div>
   <div class="popover-footer">
     <button class="btn btn-primary" ng-click="yes()">确认</button>
     <button class="btn btn-default" ng-click="closePopover()">取消</button>
   </div>
 </script>
+```
+
+#### As a service
+
+``` html
+<div class="text-center">
+  <button id="delete" class="btn btn-default" type="button" ng-click="open()">delete</button>
+</div>
+
+<script id="delete.html" type="text/ng-template">
+  <div class="popover-header">
+    Delete ?
+  </div>
+  <div class="popover-body">
+    <button class="btn btn-primary" ng-click="yes()">确认</button>
+    <button class="btn btn-default" ng-click="closePopover()">取消</button>
+  </div>
+</script>
+```
+
+```js
+angular.module('app', ['foPopover'])
+.controller('HomeCtrl', function($scope, foPopover) {
+  $scope.open = function() {
+    foPopover.open({
+      target: document.querySelector('#delete'),
+      template: 'delete.hmtl',
+      position: 'bottom middle',
+      scope: $scope
+    });
+  };
+
+  $scope.yes = function () {
+    // todo
+    foPopover.close();
+  };
+
+});
 ```

@@ -19,9 +19,9 @@
 }
 .fo-popover .popover-body {
   padding: 10px;
+  border-bottom: 1px solid #f4f4f4;
 }
 .fo-popover .popover-footer {
-  border-top: 1px solid #f4f4f4;
   text-align: center;
   padding: 10px 0;
 }
