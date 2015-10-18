@@ -55,10 +55,18 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
   function getCurrentPosition(options) {
     var position = options.position.split(' ').join('_');
     if (options.offset) {
-      return angular.extend(positions[position], {offset: options.offset});
+      return angular.extend(positions[position], {
+        offset: options.offset
+      });
     };
     return positions[position];
   }
+
+
+  this.checkOptions = function () {
+    if (!options.template) throw new Error('template is empty');
+    if (!$templateCache.get(options.template)) throw new Error('template is invalid');
+  };
 
   this.open = function() {
     $popover = getPopoverElement(options);

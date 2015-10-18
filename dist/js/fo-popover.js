@@ -295,7 +295,7 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
       if (!isNewInstance(options)) {
         popovers[options.template] = new popover($document, $templateCache, $compile, $rootScope, options);
       }
-
+      popovers[options.template].checkOptions();
       popovers[options.template].open();
     }
   };
@@ -361,10 +361,17 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
   function getCurrentPosition(options) {
     var position = options.position.split(' ').join('_');
     if (options.offset) {
-      return angular.extend(positions[position], { offset: options.offset });
+      return angular.extend(positions[position], {
+        offset: options.offset
+      });
     };
     return positions[position];
   }
+
+  this.checkOptions = function () {
+    if (!options.template) throw new Error('template is empty');
+    if (!$templateCache.get(options.template)) throw new Error('template is invalid');
+  };
 
   this.open = function () {
     $popover = getPopoverElement(options);
