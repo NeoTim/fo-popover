@@ -55,7 +55,9 @@ angular.module('app', ['foPopover']);
 
 ``` html
 <div class="text-center">
-  <button id="delete" class="btn btn-default" type="button" ng-click="open()">delete</button>
+  <button id="delete" class="btn btn-default" type="button" ng-click="open()">
+    delete
+  </button>
 </div>
 
 <script id="delete.html" type="text/ng-template">
