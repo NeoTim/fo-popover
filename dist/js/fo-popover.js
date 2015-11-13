@@ -84,6 +84,13 @@ module.exports = function ($templateCache, element, attr) {
       targetAttachment: 'top middle'
     };
     var currentPosition = getCurrentPosition();
+
+    if (attr.popoverTarget) {
+      tetherOption = angular.extend(tetherOption, {
+        target: document.querySelector(attr.popoverTarget)
+      });
+    }
+
     tetherOption = angular.extend(tetherOption, currentPosition);
     new Tether(tetherOption);
   }
@@ -91,8 +98,10 @@ module.exports = function ($templateCache, element, attr) {
   function getCurrentPosition() {
     var position = attr.popoverPosition.split(' ').join('_');
     if (attr.popoverOffset) {
-      return angular.extend(positions[position], { offset: attr.popoverOffset });
-    };
+      return angular.extend(positions[position], {
+        offset: attr.popoverOffset
+      });
+    }
     return positions[position];
   }
 
@@ -314,7 +323,7 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
     var templateString = $templateCache.get(options.template);
     var $wrapper = angular.element('<div fo-popover-inner fo-popover-id=' + guid + ' class="fo-popover"></div>');
     $wrapper[0].id = options.id;
-    $wrapper.addClass(options['class']);
+    $wrapper.addClass(options.class);
     $wrapper.addClass(guid);
 
     return angular.element($wrapper).append(templateString);

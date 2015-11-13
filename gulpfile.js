@@ -1,11 +1,10 @@
 'use strict';
 
-var gulp = require('gulp'),
-  less = require('gulp-less'),
-  rename = require('gulp-rename'),
-  source = require('vinyl-source-stream'),
-  browserify = require('browserify'),
-  babelify = require('babelify');
+var gulp = require('gulp');
+var less = require('gulp-less');
+var rename = require('gulp-rename');
+var source = require('vinyl-source-stream');
+var browserify = require('browserify');
 
 gulp.task('default', ['less', 'js', 'watch']);
 
@@ -17,7 +16,7 @@ gulp.task('less', function() {
 
 gulp.task('js', function() {
   return browserify('./src/js/main.js')
-    .transform(babelify)
+    .transform('babelify', {presets: 'es2015'})
     .bundle()
     .pipe(source('main.js'))
     .pipe(rename('fo-popover.js'))

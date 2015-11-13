@@ -24,6 +24,13 @@ module.exports = function($templateCache, element, attr) {
       targetAttachment: 'top middle'
     };
     let currentPosition = getCurrentPosition();
+
+    if (attr.popoverTarget) {
+      tetherOption = angular.extend(tetherOption, {
+        target: document.querySelector(attr.popoverTarget)
+      });
+    }
+
     tetherOption = angular.extend(tetherOption, currentPosition);
     new Tether(tetherOption);
   }
@@ -31,8 +38,10 @@ module.exports = function($templateCache, element, attr) {
   function getCurrentPosition() {
     var position = attr.popoverPosition.split(' ').join('_');
     if (attr.popoverOffset) {
-      return angular.extend(positions[position], {offset: attr.popoverOffset});
-    };
+      return angular.extend(positions[position], {
+        offset: attr.popoverOffset
+      });
+    }
     return positions[position];
   }
 
@@ -45,7 +54,7 @@ module.exports = function($templateCache, element, attr) {
   this.open = function() {
     closeAllPopover();
     this.element.addClass('open');
-    placePopover(this.element)
+    placePopover(this.element);
   }.bind(this);
 
   this.close = function() {
