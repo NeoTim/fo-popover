@@ -65,7 +65,11 @@ module.exports = function ($templateCache, element, attr) {
   function createPopoverELement() {
     var templateString = $templateCache.get(attr.popoverTemplate);
     var $wrapper = angular.element('<div class="fo-popover"></div>');
-    $wrapper[0].id = attr.popoverId;
+
+    if (attr.popoverId) {
+      $wrapper[0].id = attr.popoverId;
+    }
+
     $wrapper.addClass(attr.popoverClass);
     $wrapper.css('width', attr.popoverWidth);
 
@@ -102,6 +106,7 @@ module.exports = function ($templateCache, element, attr) {
         offset: attr.popoverOffset
       });
     }
+
     return positions[position];
   }
 

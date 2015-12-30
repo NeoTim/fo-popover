@@ -5,7 +5,11 @@ module.exports = function($templateCache, element, attr) {
   function createPopoverELement() {
     let templateString = $templateCache.get(attr.popoverTemplate);
     let $wrapper = angular.element('<div class="fo-popover"></div>');
-    $wrapper[0].id = attr.popoverId;
+
+    if (attr.popoverId) {
+      $wrapper[0].id = attr.popoverId;
+    }
+
     $wrapper.addClass(attr.popoverClass);
     $wrapper.css('width', attr.popoverWidth);
 
@@ -21,13 +25,13 @@ module.exports = function($templateCache, element, attr) {
       element: popoverElement[0],
       target: element[0],
       attachment: 'bottom middle',
-      targetAttachment: 'top middle'
+      targetAttachment: 'top middle',
     };
     let currentPosition = getCurrentPosition();
 
     if (attr.popoverTarget) {
       tetherOption = angular.extend(tetherOption, {
-        target: document.querySelector(attr.popoverTarget)
+        target: document.querySelector(attr.popoverTarget),
       });
     }
 
@@ -39,9 +43,10 @@ module.exports = function($templateCache, element, attr) {
     var position = attr.popoverPosition.split(' ').join('_');
     if (attr.popoverOffset) {
       return angular.extend(positions[position], {
-        offset: attr.popoverOffset
+        offset: attr.popoverOffset,
       });
     }
+
     return positions[position];
   }
 
@@ -60,6 +65,5 @@ module.exports = function($templateCache, element, attr) {
   this.close = function() {
     this.element.removeClass('open');
   }.bind(this);
-
 
 };
