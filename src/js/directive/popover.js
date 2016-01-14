@@ -1,4 +1,4 @@
-let positions = require('../lib/positions');
+let offset = require('../lib/offset');
 
 module.exports = function($templateCache, element, attr) {
 
@@ -21,34 +21,30 @@ module.exports = function($templateCache, element, attr) {
   }
 
   function placePopover(popoverElement) {
-    let tetherOption = {
-      element: popoverElement[0],
-      target: element[0],
-      attachment: 'bottom middle',
-      targetAttachment: 'top middle',
+    let besideOption = {
+      me: element[0],
+      you: popoverElement[0],
+      where: 'bottom center',
+      offset: '0 0'
     };
-    let currentPosition = getCurrentPosition();
+
+    var position = attr.popoverPosition.split(' ').join('_');
+
+    besideOption = angular.extend(besideOption, {offset: offset[position]});
 
     if (attr.popoverTarget) {
-      tetherOption = angular.extend(tetherOption, {
+      besideOption = angular.extend(besideOption, {
         target: document.querySelector(attr.popoverTarget),
       });
     }
 
-    tetherOption = angular.extend(tetherOption, currentPosition);
-    new Tether(tetherOption);
+    besideOption = angular.extend(besideOption, {
+      where: attr.popoverPosition
+    });
+
+    beside.init(besideOption);
   }
 
-  function getCurrentPosition() {
-    var position = attr.popoverPosition.split(' ').join('_');
-    if (attr.popoverOffset) {
-      return angular.extend(positions[position], {
-        offset: attr.popoverOffset,
-      });
-    }
-
-    return positions[position];
-  }
 
   this.element = createPopoverELement();
 

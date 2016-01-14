@@ -81,33 +81,30 @@ module.exports = function ($templateCache, element, attr) {
   }
 
   function placePopover(popoverElement) {
-    var tetherOption = {
-      element: popoverElement[0],
-      target: element[0],
-      attachment: 'bottom middle',
-      targetAttachment: 'top middle'
+    var besideOption = {
+      me: element[0],
+      you: popoverElement[0],
+      where: 'bottom center',
+      offset: '0 0'
     };
-    var currentPosition = getCurrentPosition();
+
+    var position = attr.popoverPosition.split(' ').join('_');
+
+    var offset = positions[position];
+
+    besideOption = angular.extend(besideOption, { offset: offset });
 
     if (attr.popoverTarget) {
-      tetherOption = angular.extend(tetherOption, {
+      besideOption = angular.extend(besideOption, {
         target: document.querySelector(attr.popoverTarget)
       });
     }
 
-    tetherOption = angular.extend(tetherOption, currentPosition);
-    new Tether(tetherOption);
-  }
+    besideOption = angular.extend(besideOption, {
+      where: attr.popoverPosition
+    });
 
-  function getCurrentPosition() {
-    var position = attr.popoverPosition.split(' ').join('_');
-    if (attr.popoverOffset) {
-      return angular.extend(positions[position], {
-        offset: attr.popoverOffset
-      });
-    }
-
-    return positions[position];
+    beside.init(besideOption);
   }
 
   this.element = createPopoverELement();
@@ -131,96 +128,32 @@ module.exports = function ($templateCache, element, attr) {
 'use strict';
 
 module.exports = {
-  // top
-  top_middle: {
-    offset: '10px 0',
-    attachment: 'bottom middle',
-    targetAttachment: 'top middle'
-  },
-  top_left: {
-    offset: '10px 0',
-    attachment: 'bottom left',
-    targetAttachment: 'top left'
-  },
-  top_right: {
-    offset: '10px 0',
-    attachment: 'bottom right',
-    targetAttachment: 'top right'
-  },
+
+  //top
+  top_center: '0 -10px',
+  top_left: '0 -10px',
+  top_right: '0 -10px',
 
   // bottom
-  bottom_middle: {
-    offset: '-10px 0',
-    attachment: 'top middle',
-    targetAttachment: 'bottom middle'
-  },
-  bottom_left: {
-    offset: '-10px 0',
-    attachment: 'top left',
-    targetAttachment: 'bottom left'
-  },
-  bottom_right: {
-    offset: '-10px 0',
-    attachment: 'top right',
-    targetAttachment: 'bottom right'
-  },
+  bottom_center: '0 10px',
+  bottom_left: '0 10px',
+  bottom_right: '0 10px',
 
   // left
-  left_middle: {
-    offset: '0 10px',
-    attachment: 'middle right',
-    targetAttachment: 'middle left'
-  },
-  left_top: {
-    offset: '0 10px',
-    attachment: 'top right',
-    targetAttachment: 'top left'
-  },
-  left_bottom: {
-    offset: '0 10px',
-    attachment: 'bottom right',
-    targetAttachment: 'bottom left'
-  },
+  left_center: '-10px 0',
+  left_top: '-10px 0',
+  left_bottom: '-10px 0',
 
   // right
-  right_middle: {
-    offset: '0 -10px',
-    attachment: 'middle left',
-    targetAttachment: 'middle right'
-  },
-  right_top: {
-    offset: '0 -10px',
-    attachment: 'top left',
-    targetAttachment: 'top right'
-  },
-  right_bottom: {
-    offset: '0 -10px',
-    attachment: 'bottom left',
-    targetAttachment: 'bottom right'
-  },
+  right_center: '10px 0',
+  right_top: '10px 0',
+  right_bottom: '10px 0',
 
   //diagonal
-  top_left_diagonal: {
-    offset: '0 -10px',
-    attachment: 'bottom right',
-    targetAttachment: 'top left'
-  },
-  top_right_diagonal: {
-    offset: '0 -10px',
-    attachment: 'bottom left',
-    targetAttachment: 'top right'
-  },
-  bottom_left_diagonal: {
-    offset: '0 -10px',
-    attachment: 'top right',
-    targetAttachment: 'bottom left'
-  },
-  bottom_right_diagonal: {
-    offset: '0 -10px',
-    attachment: 'top left',
-    targetAttachment: 'bottom right'
-  }
-
+  top_left_diagonal: '-10px -10px',
+  top_right_diagonal: '10px -10px',
+  bottom_left_diagonal: '-10px 10px',
+  bottom_right_diagonal: '10px 10px'
 };
 
 },{}],4:[function(require,module,exports){
