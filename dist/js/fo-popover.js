@@ -5,8 +5,7 @@ var Popover = require('./popover');
 
 module.exports = angular.module('foPopover.directive', []).directive('foPopover', foPopover);
 
-foPopover.$inject = ['$templateCache', '$document', '$compile'];
-
+// @ngInject
 function foPopover($templateCache, $document, $compile) {
 
   function appendToBody(popoverElement) {
@@ -58,7 +57,7 @@ function foPopover($templateCache, $document, $compile) {
 },{"./popover":2}],2:[function(require,module,exports){
 'use strict';
 
-var positions = require('../lib/positions');
+var offset = require('../lib/offset');
 
 module.exports = function ($templateCache, element, attr) {
 
@@ -90,13 +89,11 @@ module.exports = function ($templateCache, element, attr) {
 
     var position = attr.popoverPosition.split(' ').join('_');
 
-    var offset = positions[position];
-
-    besideOption = angular.extend(besideOption, { offset: offset });
+    besideOption = angular.extend(besideOption, { offset: offset[position] });
 
     if (attr.popoverTarget) {
       besideOption = angular.extend(besideOption, {
-        target: document.querySelector(attr.popoverTarget)
+        me: document.querySelector(attr.popoverTarget)
       });
     }
 
@@ -124,7 +121,7 @@ module.exports = function ($templateCache, element, attr) {
   }).bind(this);
 };
 
-},{"../lib/positions":3}],3:[function(require,module,exports){
+},{"../lib/offset":3}],3:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -169,8 +166,7 @@ module.exports = angular.module('foPopover', [foPopoverDirective.name, foPopover
 
 module.exports = angular.module('foPopoverInner.directive', []).directive('foPopoverInner', foPopoverInner);
 
-foPopoverInner.$inject = ['$document'];
-
+// @ngInject
 function foPopoverInner($document) {
 
   return {
@@ -251,7 +247,7 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
 },{"./fo-popover-inner.directive":5,"./popover":7}],7:[function(require,module,exports){
 'use strict';
 
-var positions = require('../lib/positions');
+var positions = require('../lib/offset');
 
 module.exports = function ($document, $templateCache, $compile, $rootScope, options) {
   var guid = 'fo-popover-' + Date.now();
@@ -293,26 +289,20 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
   }
 
   function placePopover(popoverElement, options) {
-    var tetherOption = {
-      element: popoverElement,
-      target: options.target,
-      attachment: 'bottom middle',
-      targetAttachment: 'top middle'
+    var besideOption = {
+      me: options.target,
+      you: popoverElement,
+      where: 'bottom center',
+      offset: '0 0'
     };
 
-    var currentPosition = getCurrentPosition(options);
-    tetherOption = angular.extend(tetherOption, currentPosition);
-    new Tether(tetherOption);
-  }
-
-  function getCurrentPosition(options) {
     var position = options.position.split(' ').join('_');
-    if (options.offset) {
-      return angular.extend(positions[position], {
-        offset: options.offset
-      });
-    };
-    return positions[position];
+
+    besideOption = angular.extend(besideOption, { offset: offset[position] });
+
+    besideOption = angular.extend(besideOption, { where: options.position });
+
+    beside.init(besideOption);
   }
 
   this.checkOptions = function () {
@@ -335,4 +325,4 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
   };
 };
 
-},{"../lib/positions":3}]},{},[4]);
+},{"../lib/offset":3}]},{},[4]);

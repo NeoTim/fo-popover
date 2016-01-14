@@ -1,4 +1,4 @@
-let positions = require('../lib/positions');
+let positions = require('../lib/offset');
 
 module.exports = function($document, $templateCache, $compile, $rootScope, options) {
   var guid = 'fo-popover-' + Date.now();
@@ -40,28 +40,21 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
   }
 
   function placePopover(popoverElement, options) {
-    let tetherOption = {
-      element: popoverElement,
-      target: options.target,
-      attachment: 'bottom middle',
-      targetAttachment: 'top middle'
+    let besideOption = {
+      me: options.target,
+      you: popoverElement,
+      where: 'bottom center',
+      offset: '0 0'
     };
 
-    let currentPosition = getCurrentPosition(options);
-    tetherOption = angular.extend(tetherOption, currentPosition);
-    new Tether(tetherOption);
-  }
-
-  function getCurrentPosition(options) {
     var position = options.position.split(' ').join('_');
-    if (options.offset) {
-      return angular.extend(positions[position], {
-        offset: options.offset
-      });
-    };
-    return positions[position];
-  }
 
+    besideOption = angular.extend(besideOption, {offset: offset[position]});
+
+    besideOption = angular.extend(besideOption, {where:options.position});
+
+    beside.init(besideOption);
+  }
 
   this.checkOptions = function () {
     if (!options.template) throw new Error('template is empty');
