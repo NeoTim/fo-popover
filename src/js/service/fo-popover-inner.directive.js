@@ -2,7 +2,8 @@ module.exports = angular
   .module('foPopoverInner.directive', [])
   .directive('foPopoverInner', foPopoverInner);
 
-// @ngInject
+foPopoverInner.$inject = ['$document'];
+
 function foPopoverInner($document) {
 
   return {

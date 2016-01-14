@@ -5,7 +5,8 @@ var Popover = require('./popover');
 
 module.exports = angular.module('foPopover.directive', []).directive('foPopover', foPopover);
 
-// @ngInject
+foPopover.$inject = ['$templateCache', '$document', '$compile'];
+
 function foPopover($templateCache, $document, $compile) {
 
   function appendToBody(popoverElement) {
@@ -166,7 +167,8 @@ module.exports = angular.module('foPopover', [foPopoverDirective.name, foPopover
 
 module.exports = angular.module('foPopoverInner.directive', []).directive('foPopoverInner', foPopoverInner);
 
-// @ngInject
+foPopoverInner.$inject = ['$document'];
+
 function foPopoverInner($document) {
 
   return {

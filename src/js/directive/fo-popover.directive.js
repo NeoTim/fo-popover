@@ -4,7 +4,8 @@ module.exports = angular
   .module('foPopover.directive', [])
   .directive('foPopover', foPopover);
 
-// @ngInject
+foPopover.$inject = ['$templateCache', '$document', '$compile'];
+
 function foPopover($templateCache, $document, $compile) {
 
   function appendToBody(popoverElement) {
