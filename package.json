@@ -1,6 +1,6 @@
 {
   "name": "fo-popover",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "A nice popover for Angular",
   "main": "fo-popover.js",
   "scripts": {
