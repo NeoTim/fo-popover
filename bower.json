@@ -1,6 +1,6 @@
 {
   "name": "fo-popover",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "homepage": "https://github.com/forsigner/fo-popover",
   "description": "A nice popover.",
   "main": "dist/dist/fo-popover.js",
