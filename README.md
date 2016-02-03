@@ -1,7 +1,7 @@
 # fo-popover
 A nice popover
 
-[Demo](http://fo.popover.mipinr.com)
+[Demo](http://forsigner.com/fo-popover/)
 
 ## Install
 
