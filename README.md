@@ -36,7 +36,7 @@ angular.module('app', ['foPopover']);
 <button
   class="btn btn-success"
   fo-popover
-  popover-position="top middle"
+  popover-position="top center"
   popover-template="popover.html"
 >删除</button>
 
@@ -82,7 +82,7 @@ angular.module('app', ['foPopover'])
     foPopover.open({
       target: document.querySelector('#delete'),
       template: 'delete.hmtl',
-      position: 'bottom middle',
+      position: 'bottom center',
       scope: $scope
     });
   };
