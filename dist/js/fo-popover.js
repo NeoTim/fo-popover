@@ -190,7 +190,8 @@ function foPopoverInner($document) {
       });
 
       $tagLink.bind('click', function (e) {
-        if (p.element.hasClass('open')) e.preventDefault();
+        // TODO improve
+        // if (p.element.hasClass('open')) e.preventDefault();
       });
 
       $document.bind('click', function () {
