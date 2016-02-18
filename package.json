@@ -1,6 +1,6 @@
 {
   "name": "fo-popover",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A nice popover for Angular",
   "main": "fo-popover.js",
   "scripts": {
@@ -12,8 +12,8 @@
   },
   "keywords": [
     "angular",
-    "active",
-    "link"
+    "popover",
+    "confirm"
   ],
   "author": "forsigner",
   "license": "MIT",
