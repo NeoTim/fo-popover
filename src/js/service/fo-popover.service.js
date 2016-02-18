@@ -36,7 +36,6 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
     open: function(options) {
       event.stopPropagation();
 
-
       if (!isNewInstance(options)) {
         popovers[options.template] = new popover($document, $templateCache, $compile, $rootScope, options);
       }

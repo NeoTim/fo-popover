@@ -249,7 +249,7 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
 },{"./fo-popover-inner.directive":5,"./popover":7}],7:[function(require,module,exports){
 'use strict';
 
-var positions = require('../lib/offset');
+var offset = require('../lib/offset');
 
 module.exports = function ($document, $templateCache, $compile, $rootScope, options) {
   var guid = 'fo-popover-' + Date.now();
