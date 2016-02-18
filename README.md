@@ -5,12 +5,16 @@ A nice popover
 
 ## Install
 
-```
-bower install fo-popover --save
+```bash
+$ bower install fo-popover --save
 ```
 
 ### Require
 [Beside](https://github.com/forsigner/beside)
+
+```bash
+$ bower install beside --save
+```
 
 ## Usage
 
