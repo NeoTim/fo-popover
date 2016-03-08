@@ -34,13 +34,25 @@ module.exports = function($templateCache, element, attr) {
 
     if (attr.popoverTarget) {
       besideOption = angular.extend(besideOption, {
-        me: document.querySelector(attr.popoverTarget),
+        me: document.querySelector(attr.popoverTarget)
       });
     }
 
     besideOption = angular.extend(besideOption, {
       where: attr.popoverPosition
     });
+
+    if (attr.popoverOffset) {
+      var popoverOffset = attr.popoverOffset.split(' ');
+      var defaultOffset = offset[position].split(' ');
+      var offsetX = parseInt(popoverOffset[0], 10) + parseInt(defaultOffset[0], 10);
+      var offsetY = parseInt(popoverOffset[1], 10) + parseInt(defaultOffset[1], 10);
+      var newOffset = offsetX + 'px ' + offsetY + 'px';
+
+      besideOption = angular.extend(besideOption, {
+        offset: newOffset
+      });
+    }
 
     beside.init(besideOption);
   }

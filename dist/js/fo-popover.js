@@ -102,24 +102,36 @@ module.exports = function ($templateCache, element, attr) {
       where: attr.popoverPosition
     });
 
+    if (attr.popoverOffset) {
+      var popoverOffset = attr.popoverOffset.split(' ');
+      var defaultOffset = offset[position].split(' ');
+      var offsetX = parseInt(popoverOffset[0], 10) + parseInt(defaultOffset[0], 10);
+      var offsetY = parseInt(popoverOffset[1], 10) + parseInt(defaultOffset[1], 10);
+      var newOffset = offsetX + 'px ' + offsetY + 'px';
+
+      besideOption = angular.extend(besideOption, {
+        offset: newOffset
+      });
+    }
+
     beside.init(besideOption);
   }
 
   this.element = createPopoverELement();
 
-  this.isOpened = (function () {
+  this.isOpened = function () {
     return this.element.hasClass('open');
-  }).bind(this);
+  }.bind(this);
 
-  this.open = (function () {
+  this.open = function () {
     closeAllPopover();
     this.element.addClass('open');
     placePopover(this.element);
-  }).bind(this);
+  }.bind(this);
 
-  this.close = (function () {
+  this.close = function () {
     this.element.removeClass('open');
-  }).bind(this);
+  }.bind(this);
 };
 
 },{"../lib/offset":3}],3:[function(require,module,exports){
