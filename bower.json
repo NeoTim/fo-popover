@@ -1,12 +1,15 @@
 {
   "name": "fo-popover",
-  "version": "1.1.0",
   "homepage": "https://github.com/forsigner/fo-popover",
-  "description": "A nice popover.",
-  "main": "dist/dist/fo-popover.js",
+  "description": "A nice popover for Angular",
+  "main": "dist/js/fo-popover.js",
   "keywords": [
+    "beside",
+    "angular",
     "popover",
-    "tether"
+    "fo-popover",
+    "angular-popover",
+    "confirm"
   ],
   "authors": [
     "forsigner"
@@ -20,6 +23,5 @@
     "tests"
   ],
   "dependencies": {
-    "tether": "*"
   }
 }

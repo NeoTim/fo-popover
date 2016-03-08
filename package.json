@@ -1,6 +1,5 @@
 {
   "name": "fo-popover",
-  "version": "1.1.2",
   "description": "A nice popover for Angular",
   "main": "fo-popover.js",
   "scripts": {
@@ -11,8 +10,11 @@
     "url": "git+https://github.com/forsigner/fo-popover.git"
   },
   "keywords": [
+    "beside",
     "angular",
     "popover",
+    "fo-popover",
+    "angular-popover",
     "confirm"
   ],
   "author": "forsigner",
