@@ -94,7 +94,7 @@ module.exports = function ($templateCache, element, attr) {
 
     if (attr.popoverTarget) {
       besideOption = angular.extend(besideOption, {
-        me: document.querySelector(attr.popoverTarget)
+        me: document.getElementById(attr.popoverTarget)
       });
     }
 
