@@ -1,6 +1,6 @@
 let offset = require('../lib/offset');
 
-module.exports = function($templateCache, element, attr) {
+module.exports = function ($templateCache, element, attr) {
 
   function createPopoverELement() {
     let templateString = $templateCache.get(attr.popoverTemplate);
@@ -25,21 +25,21 @@ module.exports = function($templateCache, element, attr) {
       me: element[0],
       you: popoverElement[0],
       where: 'bottom center',
-      offset: '0 0'
+      offset: '0 0',
     };
 
     var position = attr.popoverPosition.split(' ').join('_');
 
-    besideOption = angular.extend(besideOption, {offset: offset[position]});
+    besideOption = angular.extend(besideOption, { offset: offset[position] });
 
     if (attr.popoverTarget) {
       besideOption = angular.extend(besideOption, {
-        me: document.querySelector(attr.popoverTarget)
+        me: document.getElementById(attr.popoverTarget),
       });
     }
 
     besideOption = angular.extend(besideOption, {
-      where: attr.popoverPosition
+      where: attr.popoverPosition,
     });
 
     if (attr.popoverOffset) {
@@ -50,27 +50,26 @@ module.exports = function($templateCache, element, attr) {
       var newOffset = offsetX + 'px ' + offsetY + 'px';
 
       besideOption = angular.extend(besideOption, {
-        offset: newOffset
+        offset: newOffset,
       });
     }
 
     beside.init(besideOption);
   }
 
-
   this.element = createPopoverELement();
 
-  this.isOpened = function() {
+  this.isOpened = function () {
     return this.element.hasClass('open');
   }.bind(this);
 
-  this.open = function() {
+  this.open = function () {
     closeAllPopover();
     this.element.addClass('open');
     placePopover(this.element);
   }.bind(this);
 
-  this.close = function() {
+  this.close = function () {
     this.element.removeClass('open');
   }.bind(this);
 
