@@ -21,7 +21,7 @@ $ bower install beside --save
 ```html
 <link rel="stylesheet" href="bower_components/fo-popover/dist/css/fo-popover.css" />
 
-<script src="bower_components/beside/dist/js/beside.js"></script>
+<script src="bower_components/beside/dist/beside.js"></script>
 <script src="bower_components/fo-popover/dist/js/fo-popover.js"></script>
 ```
 
