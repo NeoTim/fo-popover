@@ -247,6 +247,11 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
     close: function close() {
       angular.element(document.querySelector('.fo-popover.open')).removeClass('open');
     },
+    create: function create(options) {
+      popovers[options.template] = new popover($document, $templateCache, $compile, $rootScope, options);
+      popovers[options.template].checkOptions();
+      return popovers[options.template];
+    },
     open: function open(options) {
       event.stopPropagation();
 
@@ -326,6 +331,7 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
   };
 
   this.open = function () {
+    event.stopPropagation();
     $popover = getPopoverElement(options);
     closeAllPopover();
 
@@ -337,6 +343,9 @@ module.exports = function ($document, $templateCache, $compile, $rootScope, opti
     } else {
       $popover.addClass('open');
     }
+  };
+  this.close = function () {
+    $popover.removeClass('open');
   };
 };
 

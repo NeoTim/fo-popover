@@ -62,6 +62,7 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
   };
 
   this.open = function() {
+    event.stopPropagation();
     $popover = getPopoverElement(options);
     closeAllPopover();
 
@@ -74,6 +75,8 @@ module.exports = function($document, $templateCache, $compile, $rootScope, optio
       $popover.addClass('open');
     }
   };
-
+  this.close = function(){
+    $popover.removeClass('open');
+  }
 
 };

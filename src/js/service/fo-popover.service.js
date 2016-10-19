@@ -33,6 +33,11 @@ function foPopover($rootScope, $document, $templateCache, $compile) {
     close: function() {
       angular.element(document.querySelector('.fo-popover.open')).removeClass('open');
     },
+    create:function create(options){
+      popovers[options.template] = new popover($document, $templateCache, $compile, $rootScope, options);
+      popovers[options.template].checkOptions();
+      return popovers[options.template];
+    },
     open: function(options) {
       event.stopPropagation();
 
